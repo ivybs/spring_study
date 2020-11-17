@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.ibs.pojo.User">
+        <property name="name" value="ivy"/>
+    </bean>
+    <!--    下标赋值-->
+    <bean id="userName" class="com.ibs.pojo.User">
+        <constructor-arg index="0" value="ibs"/>
+    </bean>
+    <bean id="user2" class="com.ibs.pojo.User">
+        <constructor-arg name="name" value="ibs"/>
+    </bean>
+</beans>
