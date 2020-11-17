@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--    注册bean-->
+    <bean id="userService" class="com.ibs.service.UserServiceImp"/>
+    <bean id="beforeLog" class="com.ibs.log.BeforeLog"/>
+    <bean id="afterLog" class="com.ibs.log.AfterLog"/>
+
+<!--    &lt;!&ndash; 方式一：使用原生spring api接口&ndash;&gt;-->
+<!--    &lt;!&ndash;    配置AOP:需要导入aop约束&ndash;&gt;-->
+<!--    <aop:config>-->
+<!--        &lt;!&ndash;切入点&ndash;&gt;-->
+<!--        <aop:pointcut id="pointcut" expression="execution(* com.ibs.service.UserServiceImp.*(..))"/>-->
+<!--        &lt;!&ndash; 执行环绕增加  的意思就是讲beforeLog这个类，切入到userServiceImp里面的方法去&ndash;&gt;-->
+<!--        <aop:advisor advice-ref="beforeLog" pointcut-ref="pointcut"/>-->
+<!--        <aop:advisor advice-ref="afterLog" pointcut-ref="pointcut"/>-->
+<!--    </aop:config>-->
+
+
+    <!--方式二：自定义类-->
+    <bean id="diy" class="com.ibs.diy.DiyPointCut"/>
+    <aop:config>
+        <!-- 自定义切面 -->
+        <aop:aspect ref="diy">
+            <!-- 切入点 -->
+            <aop:pointcut id="pointcut" expression="execution(* com.ibs.service.UserServiceImp.*(..))"/>
+            <!-- 通知 -->
+            <aop:before method="before" pointcut-ref="pointcut"/>
+            <aop:after method="after" pointcut-ref="pointcut"/>
+        </aop:aspect>
+
+    </aop:config>
+
+
+</beans>
